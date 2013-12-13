@@ -17,11 +17,11 @@ var generateIts = function(its) {
 
   for(var itShould in its) {
     var itDatas = its[itShould];
-    generateIt(itShould, itDatas.text, itDatas.query, defaultOptions, itDatas.expected);
+    generateIt(itShould, itDatas.text, itDatas.query, itDatas.options || defaultOptions, itDatas.expected);
   }
 };
 
-describe.skip('Standard mode', function() {
+describe('Standard mode', function() {
   describe('with text content', function() {
     var its = {
       'should not modify non-matching text': {
@@ -47,7 +47,7 @@ describe.skip('Standard mode', function() {
       'should use unicode mapping for the text': {
         text: 'Hello and wélcôme to the real world, Neo',
         query: 'welcome to the real world',
-        expected: 'Hello and *wélcôme* to the real world*, Neo',
+        expected: 'Hello and *wélcôme to the real world*, Neo',
         options: {
           before: '*',
           after: '*',
