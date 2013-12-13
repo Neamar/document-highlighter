@@ -3,6 +3,12 @@ require('should');
 
 var documentHighlight = require('../lib');
 
+var generateIt = function(description, text, query, options, expected) {
+  it(description, function() {
+      documentHighlight(text, query, options).should.eql(expected);
+    });
+};
+
 var generateIts = function(its) {
   var defaultOptions = {
     before: '*',
@@ -11,9 +17,7 @@ var generateIts = function(its) {
 
   for(var itShould in its) {
     var itDatas = its[itShould];
-    it(itShould, function() {
-      documentHighlight(itDatas.text, itDatas.query, defaultOptions).should.eql(itDatas.expected);
-    });
+    generateIt(itShould, itDatas.text, itDatas.query, defaultOptions, itDatas.expected);
   }
 };
 
@@ -59,6 +63,11 @@ describe('Standard mode', function() {
         text: 'Hello and welcome to the real world, Neo',
         query: 'welcome real world',
         expected: 'Hello and *welcome to the real world*, Neo',
+      },
+      'should highlight multiple paragraphs': {
+        text: 'Hello and welcome to the real world, Neo.\nTrinity will be there soon.',
+        query: 'Neo Trinity',
+        expected: 'Hello and welcome to the real world, *Neo*.\n*Trinity* will be there soon.',
       },
     };
 
