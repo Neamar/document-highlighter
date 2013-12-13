@@ -7,7 +7,7 @@ var generateIts = function(its) {
   for(var itShould in its) {
     var itDatas = its[itShould];
     it(itShould, function() {
-      documentHighlight(itDatas[0]).should.eql(itDatas[1]);
+      documentHighlight(itDatas[0], itDatas[1]).should.eql(itDatas[2]);
     });
   }
 };
@@ -15,7 +15,7 @@ var generateIts = function(its) {
 describe('Standard mode', function() {
   describe('with text content', function() {
     var its = {
-      'should': ['hello', 'hello']
+      'should not modify non matching text': ['Some text', 'non matching query', 'Some text']
     };
 
     generateIts(its);
