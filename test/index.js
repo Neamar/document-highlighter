@@ -59,6 +59,11 @@ describe('Standard mode', function() {
         query: 'hello world',
         expected: '*Hello* and welcome to the real *world*, Neo',
       },
+      'should not highlight stop words': {
+        text: 'Hello and welcome to the real world, Neo',
+        query: 'hello to the real world',
+        expected: '*Hello* and welcome to the real *world*, Neo',
+      },
       'should include stop-words queries': {
         text: 'Hello and welcome to the real world, Neo',
         query: 'welcome real world',
@@ -75,7 +80,35 @@ describe('Standard mode', function() {
   });
 
   describe('with HTML content', function() {
+    var its = {
+      'should not modify non-matching text': {
+        text: 'Hello and <span>welcome to the</span> real world, Neo',
+        query: 'non matching query',
+        expected: 'Hello and welcome to the real world, Neo'
+      },
+      'should highlight relevant, including HTML': {
+        text: 'Hello and welcome to the <strong>real world</strong>, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
+      },
+      'should skip empty HTML': {
+        text: 'Hello and welcome to<span class="a_0__0"</span> the real world, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to<span class="a_0__0"</span> the real world*, Neo',
+      },
+      'should skip embedded empty HTML': {
+        text: 'Hello and wel<span class="a_0__0"</span>come to the real world, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *wel<span class="a_0__0"</span>come to the real world*, Neo',
+      },
+      'should highlight multiple paragraphs': {
+        text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
+        query: 'Neo Trinity',
+        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+      },
+    };
 
+    generateIts(its);
   });
 });
 
