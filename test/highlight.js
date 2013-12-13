@@ -64,7 +64,12 @@ describe('Standard mode', function() {
           language: 'fr'
         }
       },
-      'should match standard lexemes': {
+      'should match suffixes in the text': {
+        text: 'Hello and welcome to the reals worlds, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to the reals worlds*, Neo',
+      },
+      'should match suffixes in the query': {
         text: 'Hello and welcome to the real world, Neo',
         query: 'welcome to the reals worlds',
         expected: 'Hello and *welcome to the real world*, Neo',
