@@ -62,7 +62,7 @@ describe('Standard mode', function() {
       'should not highlight stop words': {
         text: 'Hello and welcome to the real world, Neo',
         query: 'hello to the real world',
-        expected: '*Hello* and welcome to the real *world*, Neo',
+        expected: '*Hello* and welcome to the *real world*, Neo',
       },
       'should include stop-words queries': {
         text: 'Hello and welcome to the real world, Neo',
