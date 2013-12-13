@@ -20,12 +20,12 @@
     "highlighting",
     "html",
     "snippet",
-    "query"
-    "queries"
+    "query",
+    "queries",
     "search"
   ],
   "dependencies": {
-    "async": "0.2.x",
+    "async": "0.2.x"
   },
   "devDependencies": {
     "mocha": "1.14.x",
