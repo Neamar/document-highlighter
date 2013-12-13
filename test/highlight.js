@@ -57,7 +57,7 @@ describe('Standard mode', function() {
       'should use unicode mapping for the query': {
         text: 'Hello and welcome to the real world, Neo',
         query: 'wélcôme to the real world',
-        expected: 'Hello and *welcome* to the real world*, Neo',
+        expected: 'Hello and *welcome to the real world*, Neo',
         options: {
           before: '*',
           after: '*',
