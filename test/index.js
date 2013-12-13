@@ -3,121 +3,30 @@ require('should');
 
 var documentHighlight = require('../lib');
 
-var generateIt = function(description, text, query, options, expected) {
-  it(description, function() {
-      documentHighlight(text, query, options).should.eql(expected);
-    });
-};
-
-var generateIts = function(its) {
-  var defaultOptions = {
-    before: '*',
-    after: '*'
-  };
-
-  for(var itShould in its) {
-    var itDatas = its[itShould];
-    generateIt(itShould, itDatas.text, itDatas.query, defaultOptions, itDatas.expected);
-  }
-};
-
-describe('Standard mode', function() {
-  describe('with text content', function() {
-    var its = {
-      'should not modify non-matching text': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'non matching query',
-        expected: 'Hello and welcome to the real world, Neo'
-      },
-      'should highlight relevant text': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to the real world*, Neo',
-      },
-      'should be case insensitive to the text': {
-        text: 'Hello and WELCOME to the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *WELCOME to the real world*, Neo',
-      },
-      'should be case insensitive to the query': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'WELCOME to the real world',
-        expected: 'Hello and *welcome to the real world*, Neo',
-      },
-      'should use unicode mapping': {
-        text: 'Hello and wélcöme to the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *wélcöme to the real world*, Neo',
-      },
-      'should match standard lexemes': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'welcome to the reals worlds',
-        expected: 'Hello and *welcome to the real world*, Neo',
-      },
-      'should split non contiguous queries': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'hello world',
-        expected: '*Hello* and welcome to the real *world*, Neo',
-      },
-      'should not highlight stop words': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'hello to the real world',
-        expected: '*Hello* and welcome to the *real world*, Neo',
-      },
-      'should include stop-words queries': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'welcome real world',
-        expected: 'Hello and *welcome to the real world*, Neo',
-      },
-      'should highlight multiple paragraphs': {
-        text: 'Hello and welcome to the real world, Neo.\nTrinity will be there soon.',
-        query: 'Neo Trinity',
-        expected: 'Hello and welcome to the real world, *Neo*.\n*Trinity* will be there soon.',
-      },
-    };
-
-    generateIts(its);
+describe('Highlight options', function() {
+  it('should not be mandatory', function() {
+    documentHighlight("my text", "text").should.eql("my <strong>text</strong>");
   });
 
-  describe.skip('with HTML content', function() {
-    var its = {
-      'should not modify non-matching text': {
-        text: 'Hello and <span>welcome to the</span> real world, Neo',
-        query: 'non matching query',
-        expected: 'Hello and welcome to the real world, Neo'
-      },
-      'should highlight relevant, including HTML': {
-        text: 'Hello and welcome to the <strong>real world</strong>, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
-      },
-      'should skip empty HTML': {
-        text: 'Hello and welcome to<span class="a_0__0"</span> the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to<span class="a_0__0"</span> the real world*, Neo',
-      },
-      'should skip embedded empty HTML': {
-        text: 'Hello and wel<span class="a_0__0"</span>come to the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *wel<span class="a_0__0"</span>come to the real world*, Neo',
-      },
-      'should highlight multiple paragraphs': {
-        text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
-        query: 'Neo Trinity',
-        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
-      },
-    };
-
-    generateIts(its);
-  });
-});
-
-describe('Strict mode', function() {
-  describe('with text content', function() {
-
+  it('should allow override of before and after', function() {
+    documentHighlight("my text", "text", {before: '^', after: '$'}).should.eql("my ^text$");
   });
 
-  describe('with HTML content', function() {
+  it('should load language datas', function() {
+    // No match in en
+    documentHighlight("my téxt", "text", {language: "en"}).should.eql("my téxt");
 
+    // Match in fr
+    documentHighlight("my téxt", "text", {language: "fr"}).should.eql("my <strong>téxt</strong>");
+  });
+
+  it('should forbid unknown languages', function() {
+    try {
+      documentHighlight("my text", "text", {language: "nope"});
+    } catch(e) {
+      return;
+    }
+
+    throw new Error("Unknown language should be forbidden.");
   });
 });
