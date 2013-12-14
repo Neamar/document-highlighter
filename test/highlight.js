@@ -104,7 +104,7 @@ describe('Standard mode', function() {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
         query: 'non matching query',
-        expected: 'Hello and welcome to the real world, Neo'
+        expected: 'Hello and <span>welcome to the</span> real world, Neo'
       },
       'should highlight relevant, including HTML': {
         text: 'Hello and welcome to the <strong>real world</strong>, Neo',
@@ -120,6 +120,11 @@ describe('Standard mode', function() {
         text: 'Hello and wel<span class="a_0__0"</span>come to the real world, Neo',
         query: 'welcome to the real world',
         expected: 'Hello and *wel<span class="a_0__0"</span>come to the real world*, Neo',
+      },
+      'should return well-formed HTML': {
+        text: 'Hello and welcome to <strong>the real world, Neo</strong>',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
       },
       'should highlight multiple paragraphs': {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
