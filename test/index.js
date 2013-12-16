@@ -31,6 +31,6 @@ describe('Highlight options', function() {
   });
 
   it('should allow for regexp chars in query', function() {
-    documentHighlight("my ^text$", "^text$").should.eql("my <strong>^text$</strong>");
+    documentHighlight("my ^text$", "^text$").should.eql("my ^<strong>text</strong>$");
   });
 });
