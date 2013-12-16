@@ -5,11 +5,8 @@ var documentHighlight = require('../lib');
 
 var generateIt = function(description, text, query, options, expected) {
   it(description, function() {
-    if(description.indexOf('contiguous') !== -1) {
-      process.exit();
-    }
-      documentHighlight(text, query, options).should.eql(expected);
-    });
+    documentHighlight(text, query, options).should.eql(expected);
+  });
 };
 
 var generateIts = function(its) {
@@ -78,9 +75,9 @@ describe('Standard mode', function() {
         expected: 'Hello and *welcome to the real world*, Neo',
       },
       'should split non contiguous queries': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'hello world',
-        expected: '*Hello* and welcome to the real *world*, Neo',
+        text: 'In JavaScript, you can define a callback handler in regex string replace operations',
+        query: 'Javascript callback operations',
+        expected: 'In *JavaScript*, you can define a *callback* handler in regex string replace *operations*',
       },
       'should not highlight stop words': {
         text: 'Hello and welcome to the real world, Neo',
