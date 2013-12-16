@@ -3,35 +3,34 @@ require('should');
 
 var documentHighlight = require('../lib');
 
-var generateIts = function(its) {
-  for(var itShould in its) {
-    var itDatas = its[itShould];
-    it(itShould, function() {
-      documentHighlight(itDatas[0], itDatas[1]).should.eql(itDatas[2]);
-    });
-  }
-};
-
-describe('Standard mode', function() {
-  describe('with text content', function() {
-    var its = {
-      'should not modify non matching text': ['Some text', 'non matching query', 'Some text']
-    };
-
-    generateIts(its);
+describe('Highlight options', function() {
+  it('should not be mandatory', function() {
+    documentHighlight("my text", "text").should.eql("my <strong>text</strong>");
   });
 
-  describe('with HTML content', function() {
-
-  });
-});
-
-describe('Strict mode', function() {
-  describe('with text content', function() {
-
+  it('should allow override of before and after', function() {
+    documentHighlight("my text", "text", {before: '^', after: '$'}).should.eql("my ^text$");
   });
 
-  describe('with HTML content', function() {
+  it('should load language datas', function() {
+    // No match in en
+    documentHighlight("my téxt", "text", {language: "en"}).should.eql("my téxt");
 
+    // Match in fr
+    documentHighlight("my téxt", "text", {language: "fr"}).should.eql("my <strong>téxt</strong>");
+  });
+
+  it('should forbid unknown languages', function() {
+    try {
+      documentHighlight("my text", "text", {language: "nope"});
+    } catch(e) {
+      return;
+    }
+
+    throw new Error("Unknown language should be forbidden.");
+  });
+
+  it('should allow for regexp chars in query', function() {
+    documentHighlight("my ^text$", "^text$").should.eql("my ^<strong>text</strong>$");
   });
 });
