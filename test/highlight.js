@@ -80,9 +80,9 @@ describe('Standard mode', function() {
         expected: 'In *JavaScript*, you can define a *callback* handler in regex string replace *operations*',
       },
       'should not highlight stop words': {
-        text: 'Hello and welcome to the real world, Neo',
+        text: 'Hello to the real world, Neo',
         query: 'Welcome to the probably real world',
-        expected: 'Hello and welcome to the *real world*, Neo',
+        expected: 'Hello to the *real world*, Neo',
       },
       'should include stop-words queries': {
         text: 'Hello and welcome to the real world, Neo',
