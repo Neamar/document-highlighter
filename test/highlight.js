@@ -79,6 +79,11 @@ describe('Standard mode', function() {
         query: 'Javascript callback operations',
         expected: 'In *JavaScript*, you can define a *callback* handler in regex string replace *operations*',
       },
+      'should split non contiguous queries and highlight longest match': {
+        text: 'In JavaScript, you can define a callback handler in regex string replace operations',
+        query: 'callback handler in operations',
+        expected: 'In JavaScript, you can define a *callback handler in* regex string replace *operations*',
+      },
       'should not highlight stop words': {
         text: 'Hello to the real world, Neo',
         query: 'Welcome to the probably real world',
