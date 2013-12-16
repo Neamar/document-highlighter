@@ -90,15 +90,20 @@ describe('Standard mode', function() {
         expected: 'Hello to the *real world*, Neo',
       },
       'should include stop-words queries': {
-        text: 'Hello and welcome to the real world, Neo',
-        query: 'welcome real world',
-        expected: 'Hello and *welcome to the real world*, Neo',
+        text: 'Hello and farewell to the real world, Neo',
+        query: 'farewell real world',
+        expected: 'Hello and *farewell to the real world*, Neo',
       },
       'should highlight multiple paragraphs': {
         text: 'Hello and welcome to the real world, Neo.\nTrinity will be there soon.',
         query: 'Neo Trinity',
         expected: 'Hello and welcome to the real world, *Neo*.\n*Trinity* will be there soon.',
       },
+      'should work on longer texts': {
+        text: "The index analysis module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query strings. It maps to the Lucene Analyzer.",
+        query: "The index analysis string",
+        expected: "*The index analysis* module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query *strings*. It maps to the Lucene Analyzer."
+      }
     };
 
     generateIts(its);

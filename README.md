@@ -9,7 +9,7 @@ The following text :
 
 When highlighted for the query `The index analysis string` will become:
 
-> **The index analysis module** acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query **strings**. It maps to the Lucene Analyzer.
+> **The index analysis** module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query **strings**. It maps to the Lucene Analyzer.
 
 This also works for HTML documents, e.g. :
 
