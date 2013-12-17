@@ -5,7 +5,9 @@ var documentHighlight = require('../lib');
 
 var generateIt = function(description, text, query, options, expected) {
   it(description, function() {
-    documentHighlight(text, query, options).should.eql(expected);
+    var ret = documentHighlight(text, query, options);
+    ret.text.should.eql(expected);
+    console.log(ret);
   });
 };
 
@@ -109,7 +111,7 @@ describe('Standard mode', function() {
     generateIts(its);
   });
 
-  describe.skip('with HTML content', function() {
+  describe('with HTML content', function() {
     var its = {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
@@ -124,12 +126,12 @@ describe('Standard mode', function() {
       'should skip empty HTML': {
         text: 'Hello and welcome to<span class="a_0__0"</span> the real world, Neo',
         query: 'welcome to the real world',
-        expected: 'Hello and *welcome to<span class="a_0__0"</span> the real world*, Neo',
+        expected: 'Hello and *welcome to<span class="a_0__0"></span> the real world*, Neo',
       },
       'should skip embedded empty HTML': {
         text: 'Hello and wel<span class="a_0__0"</span>come to the real world, Neo',
         query: 'welcome to the real world',
-        expected: 'Hello and *wel<span class="a_0__0"</span>come to the real world*, Neo',
+        expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
       },
       'should return well-formed HTML': {
         text: 'Hello and welcome to <strong>the real world, Neo</strong>',
