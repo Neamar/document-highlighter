@@ -117,7 +117,7 @@ describe('Standard mode', function() {
     generateIts(its, generateTextIt);
   });
 
-  describe('with HTML content', function() {
+  describe.only('with HTML content', function() {
     var its = {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
@@ -125,14 +125,24 @@ describe('Standard mode', function() {
         expected: 'Hello and <span>welcome to the</span> real world, Neo'
       },
       'should highlight and maintain HTML': {
+        text: '<strong>Hello</strong> and welcome to the real world, Neo',
+        query: 'welcome to the real world',
+        expected: '<strong>Hello</strong> and *welcome to the real world*, Neo',
+      },
+      'should highlight and maintain HTML inside query': {
         text: 'Hello and welcome to the <strong>real</strong> world, Neo',
         query: 'welcome to the real world',
         expected: 'Hello and *welcome to the <strong>real</strong> world*, Neo',
       },
-      'should highlight and maintain HTML in edge case': {
+      'should highlight and maintain HTML inside query in edge case': {
         text: 'Hello and welcome to the <strong>real world</strong>, Neo',
         query: 'welcome to the real world',
         expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
+      },
+      'should match multiples fragments': {
+        text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
+        query: 'callback handler in operations',
+        expected: 'In JavaScript, <em>you can define a *callback handler</em> in* regex string replace *operations*',
       },
       'should skip empty HTML': {
         text: 'Hello and welcome to<span class="a_0__0"</span> the real world, Neo',
