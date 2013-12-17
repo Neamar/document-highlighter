@@ -3,15 +3,21 @@ require('should');
 
 var documentHighlight = require('../lib');
 
-var generateIt = function(description, text, query, options, expected) {
+var generateTextIt = function(description, text, query, options, expected) {
   it(description, function() {
-    var ret = documentHighlight(text, query, options);
+    var ret = documentHighlight.text(text, query, options);
     ret.text.should.eql(expected);
-    console.log(ret);
   });
 };
 
-var generateIts = function(its) {
+var generateHtmlIt = function(description, text, query, options, expected) {
+  it(description, function() {
+    var ret = documentHighlight.html(text, query, options);
+    ret.should.eql(expected);
+  });
+};
+
+var generateIts = function(its, func) {
   var defaultOptions = {
     before: '*',
     after: '*'
@@ -19,7 +25,7 @@ var generateIts = function(its) {
 
   for(var itShould in its) {
     var itDatas = its[itShould];
-    generateIt(itShould, itDatas.text, itDatas.query, itDatas.options || defaultOptions, itDatas.expected);
+    func(itShould, itDatas.text, itDatas.query, itDatas.options || defaultOptions, itDatas.expected);
   }
 };
 
@@ -108,7 +114,7 @@ describe('Standard mode', function() {
       }
     };
 
-    generateIts(its);
+    generateIts(its, generateTextIt);
   });
 
   describe('with HTML content', function() {
@@ -118,7 +124,12 @@ describe('Standard mode', function() {
         query: 'non matching query',
         expected: 'Hello and <span>welcome to the</span> real world, Neo'
       },
-      'should highlight relevant, including HTML': {
+      'should highlight and maintain HTML': {
+        text: 'Hello and welcome to the <strong>real</strong> world, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to the <strong>real</strong> world*, Neo',
+      },
+      'should highlight and maintain HTML in edge case': {
         text: 'Hello and welcome to the <strong>real world</strong>, Neo',
         query: 'welcome to the real world',
         expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
@@ -145,7 +156,7 @@ describe('Standard mode', function() {
       },
     };
 
-    generateIts(its);
+    generateIts(its, generateHtmlIt);
   });
 });
 
