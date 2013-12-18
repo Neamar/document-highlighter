@@ -3,6 +3,18 @@ require('should');
 
 var documentHighlight = require('../lib');
 
+describe('Highlight query', function() {
+  it('should be mandatory', function() {
+    try {
+      documentHighlight.text("my text");
+    } catch(e) {
+      return;
+    }
+
+    throw new Error("Query should be mandatory");
+  });
+});
+
 describe('Highlight options', function() {
   it('should not be mandatory', function() {
     documentHighlight.text("my text", "text").text.should.eql("my <strong>text</strong>");
