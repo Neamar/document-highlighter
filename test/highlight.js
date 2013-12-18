@@ -126,7 +126,7 @@ describe('Standard mode', function() {
         text: '<strong>Farewell</strong> and welcome to the real <strong>world</strong>.',
         indexes: [
           { startIndex: 0, endIndex: 8, content: 'Farewell'},
-          { startIndex: 28, endIndex: 33, content: 'world'}
+          { startIndex: 33, endIndex: 38, content: 'world'}
         ]
       };
 
