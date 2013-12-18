@@ -29,8 +29,4 @@ describe('Highlight options', function() {
 
     throw new Error("Unknown language should be forbidden.");
   });
-
-  it('should allow for regexp chars in query', function() {
-    documentHighlight("my ^text$", "^text$").should.eql("my ^<strong>text</strong>$");
-  });
 });

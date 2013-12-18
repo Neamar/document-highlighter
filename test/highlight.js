@@ -113,11 +113,28 @@ describe('Standard mode', function() {
         expected: "*The index analysis* module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query *strings*. It maps to the Lucene Analyzer."
       }
     };
-
     generateIts(its, generateTextIt);
+
+    it('should allow for regexp chars in query', function() {
+      documentHighlight.text("my ^text$", "^text$").text.should.eql("my ^<strong>text</strong>$");
+    });
+
+    it('should return highlighted text and indices', function() {
+      var ret = documentHighlight.text("Farewell and welcome to the real world.", "farewell world");
+
+      var expected = {
+        text: '<strong>Farewell</strong> and welcome to the real <strong>world</strong>.',
+        indexes: [
+          { startIndex: 0, endIndex: 8, content: 'Farewell'},
+          { startIndex: 28, endIndex: 33, content: 'world'}
+        ]
+      };
+
+      ret.should.eql(expected);
+    });
   });
 
-  describe.only('with HTML content', function() {
+  describe('with HTML content', function() {
     var its = {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
@@ -141,8 +158,8 @@ describe('Standard mode', function() {
       },
       'should match multiples fragments': {
         text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
-        query: 'callback handler in operations',
-        expected: 'In JavaScript, <em>you can define a *callback handler</em> in* regex string replace *operations*',
+        query: 'callback handler operations',
+        expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
       },
       'should skip empty HTML': {
         text: 'Hello and welcome to<span class="a_0__0"</span> the real world, Neo',
@@ -165,7 +182,6 @@ describe('Standard mode', function() {
         expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
       },
     };
-
     generateIts(its, generateHtmlIt);
   });
 });
