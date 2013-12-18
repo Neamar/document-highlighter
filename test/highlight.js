@@ -3,13 +3,21 @@ require('should');
 
 var documentHighlight = require('../lib');
 
-var generateIt = function(description, text, query, options, expected) {
+var generateTextIt = function(description, text, query, options, expected) {
   it(description, function() {
-    documentHighlight(text, query, options).should.eql(expected);
+    var ret = documentHighlight.text(text, query, options);
+    ret.text.should.eql(expected);
   });
 };
 
-var generateIts = function(its) {
+var generateHtmlIt = function(description, text, query, options, expected) {
+  it(description, function() {
+    var ret = documentHighlight.html(text, query, options);
+    ret.should.eql(expected);
+  });
+};
+
+var generateIts = function(its, func) {
   var defaultOptions = {
     before: '*',
     after: '*'
@@ -17,7 +25,7 @@ var generateIts = function(its) {
 
   for(var itShould in its) {
     var itDatas = its[itShould];
-    generateIt(itShould, itDatas.text, itDatas.query, itDatas.options || defaultOptions, itDatas.expected);
+    func(itShould, itDatas.text, itDatas.query, itDatas.options || defaultOptions, itDatas.expected);
   }
 };
 
@@ -105,31 +113,68 @@ describe('Standard mode', function() {
         expected: "*The index analysis* module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query *strings*. It maps to the Lucene Analyzer."
       }
     };
+    generateIts(its, generateTextIt);
 
-    generateIts(its);
+    it('should allow for regexp chars in query', function() {
+      documentHighlight.text("my ^text$", "^text$").text.should.eql("my ^<strong>text</strong>$");
+    });
+
+    it('should return highlighted text and indices', function() {
+      var ret = documentHighlight.text("Farewell and welcome to the real world.", "farewell world");
+
+      var expected = {
+        text: '<strong>Farewell</strong> and welcome to the real <strong>world</strong>.',
+        indexes: [
+          { startIndex: 0, endIndex: 8, content: 'Farewell'},
+          { startIndex: 33, endIndex: 38, content: 'world'}
+        ]
+      };
+
+      ret.should.eql(expected);
+    });
   });
 
-  describe.skip('with HTML content', function() {
+  describe('with HTML content', function() {
     var its = {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
         query: 'non matching query',
         expected: 'Hello and <span>welcome to the</span> real world, Neo'
       },
-      'should highlight relevant, including HTML': {
+      'should highlight and maintain HTML': {
+        text: '<strong>Hello</strong> and welcome to the real world, Neo',
+        query: 'welcome to the real world',
+        expected: '<strong>Hello</strong> and *welcome to the real world*, Neo',
+      },
+      'should highlight and maintain HTML inside query': {
+        text: 'Hello and welcome to the <strong>real</strong> world, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to the <strong>real</strong> world*, Neo',
+      },
+      'should highlight and maintain HTML inside query in edge case': {
         text: 'Hello and welcome to the <strong>real world</strong>, Neo',
         query: 'welcome to the real world',
         expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
       },
+      'should match multiples fragments': {
+        text: 'In JavaScript, <em>you can define a callback handler in regex</em> string replace operations',
+        query: 'callback handler operations',
+        expected: 'In JavaScript, <em>you can define a *callback handler* in regex</em> string replace *operations*',
+      },
       'should skip empty HTML': {
-        text: 'Hello and welcome to<span class="a_0__0"</span> the real world, Neo',
+        text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
         query: 'welcome to the real world',
-        expected: 'Hello and *welcome to<span class="a_0__0"</span> the real world*, Neo',
+        expected: 'Hello and *welcome to<span class="a_0__0"></span> the real world*, Neo',
       },
       'should skip embedded empty HTML': {
-        text: 'Hello and wel<span class="a_0__0"</span>come to the real world, Neo',
+        text: 'Hello and wel<span class="a_0__0"></span>come to the real world, Neo',
         query: 'welcome to the real world',
-        expected: 'Hello and *wel<span class="a_0__0"</span>come to the real world*, Neo',
+        expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
+      },
+/*      'should match multiples fragments in edge cases': {
+        text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
+        query: 'callback handler operations',
+        expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
       },
       'should return well-formed HTML': {
         text: 'Hello and welcome to <strong>the real world, Neo</strong>',
@@ -140,10 +185,9 @@ describe('Standard mode', function() {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
         query: 'Neo Trinity',
         expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
-      },
+      },*/
     };
-
-    generateIts(its);
+    generateIts(its, generateHtmlIt);
   });
 });
 
