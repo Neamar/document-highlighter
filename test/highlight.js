@@ -42,6 +42,11 @@ describe('Standard mode', function() {
         query: 'welcome to the real world',
         expected: 'Hello and *welcome to the real world*, Neo',
       },
+      'should highlight all relevant text': {
+        text: 'Hello and welcome to the real world, Neo. This world is mine, not your old world.',
+        query: 'world',
+        expected: 'Hello and welcome to the real *world*, Neo. This *world* is mine, not your old *world*.',
+      },
       'should be case insensitive to the text': {
         text: 'Hello and WELCOME to the real world, Neo',
         query: 'welcome to the real world',
