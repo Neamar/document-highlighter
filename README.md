@@ -1,5 +1,7 @@
 Content aware document Highlighter
 =======================
+![Build Status](https://travis-ci.org/Neamar/document-highlighter.png)
+![Coverage Status](https://coveralls.io/repos/Neamar/document-highlighter/badge.png?branch=master)
 
 Add highlight to a raw / HTML document for the specified query.
 
