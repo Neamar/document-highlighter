@@ -171,7 +171,7 @@ describe('Standard mode', function() {
         query: 'welcome to the real world',
         expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
       },
-/*      'should match multiples fragments in edge cases': {
+      /*'should match multiples fragments in edge cases': {
         text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
         query: 'callback handler operations',
         expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
