@@ -188,6 +188,16 @@ describe('Standard mode', function() {
       },*/
     };
     generateIts(its, generateHtmlIt);
+
+    it('should fail on invalid markup', function() {
+      try {
+        documentHighlight.html("<hello world", "world");
+      } catch(e) {
+        return;
+      }
+
+      throw new Error("Invalid markup should not be parsed");
+    });
   });
 });
 
