@@ -189,9 +189,19 @@ describe('Standard mode', function() {
       throw new Error("Invalid markup should not be parsed");
     });
 
-    describe.skip('in edge cases', function() {
+    describe('in edge cases with existing markup', function() {
       var its = {
-        'should match multiples fragments in edge cases': {
+          '---(--[---------]--)----': {
+            text: '<strong>Eat drink and be merry</strong> for tomorrow we die',
+            query: 'drink',
+            expected: '<strong>Eat *drink* and be merry</strong> for tomorrow we die',
+          },
+          '------[---(---)-]-------': {
+            text: 'Eat <strong>drink</strong> and be merry for tomorrow we die',
+            query: 'Eat drink and be merry',
+            expected: '*Eat <strong>drink</strong> and be merry* for tomorrow we die',
+          },
+/*        'should match multiples fragments in edge cases': {
           text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
           query: 'callback handler operations',
           expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
@@ -205,7 +215,7 @@ describe('Standard mode', function() {
           text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
           query: 'Neo Trinity',
           expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
-        },
+        },*/
       };
       generateIts(its, generateHtmlIt);
     });
