@@ -107,6 +107,11 @@ describe('Standard mode', function() {
         query: 'farewell real world',
         expected: 'Hello and *farewell to the real world*, Neo',
       },
+      'should allow for punctuations': {
+        text: 'Eat, drink and be merry',
+        query: 'eat drink',
+        expected: '*Eat, drink* and be merry',
+      },
       'should highlight multiple paragraphs': {
         text: 'Hello and welcome to the real world, Neo.\nTrinity will be there soon.',
         query: 'Neo Trinity',
