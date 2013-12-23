@@ -212,7 +212,7 @@ describe('Standard mode', function() {
   });
 });
 
-describe('Strict mode', function() {
+describe.skip('Strict mode', function() {
   describe('with text content', function() {
 
   });
