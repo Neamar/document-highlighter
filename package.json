@@ -25,12 +25,10 @@
     "search"
   ],
   "dependencies": {
-    "async": "0.2.x"
   },
   "devDependencies": {
     "mocha": "1.15.x",
-    "should": "2.1.x",
-    "jshint": "2.3.x"
+    "should": "2.1.x"
   },
   "licence": "WTFPL",
   "engines": {
