@@ -221,7 +221,7 @@ describe('Standard mode', function() {
         '------[----(---]---)---': {
           text: 'Eat <strong>drink and be merry</strong> for tomorrow we die',
           query: 'Eat drink',
-          expected: '*Eat* <strong>*drink* and be merry</strong> for tomorrow we die',
+          expected: '*Eat *<strong>*drink* and be merry</strong> for tomorrow we die',
         },
         '------[(---)---]-------': {
           text: '<strong>Eat drink</strong> and be merry for tomorrow we die',
