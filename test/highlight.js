@@ -194,7 +194,7 @@ describe('Standard mode', function() {
       throw new Error("Invalid markup should not be parsed");
     });
 
-    describe.only('in edge cases with existing markup', function() {
+    describe('in edge cases with existing markup', function() {
       // [---] is the highlight query,
       // (---) the existing markup
       var its = {
@@ -216,7 +216,7 @@ describe('Standard mode', function() {
         '--(---[---)----]-------': {
           text: '<strong>Eat drink and be merry</strong> for tomorrow we die',
           query: 'merry for tomorrow',
-          expected: '<strong>Eat drink and be *merry*</strong> *for tomorrow* we die',
+          expected: '<strong>Eat drink and be *merry*</strong>* for tomorrow* we die',
         },
         '------[----(---]---)---': {
           text: 'Eat <strong>drink and be merry</strong> for tomorrow we die',
