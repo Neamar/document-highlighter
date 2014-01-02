@@ -243,7 +243,7 @@ describe('Standard mode', function() {
           query: 'for tomorrow we die',
           expected: 'Eat drink <strong>and be merry</strong> *for tomorrow we die*',
         },
-/*      'should match multiples fragments in edge cases': {
+      'should match multiples fragments': {
           text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
           query: 'callback handler operations',
           expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
@@ -257,7 +257,7 @@ describe('Standard mode', function() {
           text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
           query: 'Neo Trinity',
           expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
-        },*/
+        },
       };
       generateIts(its, generateHtmlIt);
     });
