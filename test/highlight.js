@@ -180,6 +180,21 @@ describe('Standard mode', function() {
         text: 'Hello and wel<span class="a_0__0"></span>come to the real world, Neo',
         query: 'welcome to the real world',
         expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
+      'should match multiples fragments': {
+          text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
+          query: 'callback handler operations',
+          expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
+        },
+        'should return well-formed HTML': {
+          text: 'Hello and welcome to <strong>the real world, Neo</strong>',
+          query: 'welcome to the real world',
+          expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
+        },
+        'should highlight multiple paragraphs': {
+          text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
+          query: 'Neo Trinity',
+          expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+        },
       },
     };
     generateIts(its, generateHtmlIt);
@@ -242,21 +257,6 @@ describe('Standard mode', function() {
           text: 'Eat drink <strong>and be merry</strong> for tomorrow we die',
           query: 'for tomorrow we die',
           expected: 'Eat drink <strong>and be merry</strong> *for tomorrow we die*',
-        },
-      'should match multiples fragments': {
-          text: 'In JavaScript, <em>you can define a callback handler</em> in regex string replace operations',
-          query: 'callback handler operations',
-          expected: 'In JavaScript, <em>you can define a *callback handler*</em> in regex string replace *operations*',
-        },
-        'should return well-formed HTML': {
-          text: 'Hello and welcome to <strong>the real world, Neo</strong>',
-          query: 'welcome to the real world',
-          expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
-        },
-        'should highlight multiple paragraphs': {
-          text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
-          query: 'Neo Trinity',
-          expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
         },
       };
       generateIts(its, generateHtmlIt);
