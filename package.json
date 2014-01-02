@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node ./bin/server",
-    "test": "NODE_ENV=test mocha -b -R spec test/",
+    "test": "NODE_ENV=test mocha -R spec test/",
     "lint": "jshint lib/ test/",
     "coverage": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/"
   },
