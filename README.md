@@ -3,7 +3,8 @@ Content aware document Highlighter
 ![Build Status](https://travis-ci.org/Neamar/document-highlighter.png)
 ![Coverage Status](https://coveralls.io/repos/Neamar/document-highlighter/badge.png?branch=master)
 
-Add highlight to a raw / HTML document for the specified query.
+Add highlight to a raw / HTML document for the specified query. Handle unicode, stop-words and punctuation.
+Generate HTML-compliant highlights, even for complex markup.
 
 The following text :
 
@@ -20,4 +21,27 @@ This also works for HTML documents, e.g. :
 When highlighted for the query `it contains some italic empty` will become:
 > This document **contains _italics_** and stuff.
 
-Stopwords are not analyzed nor highlighted.
+## Usage
+### Highlight text documents
+```javascript
+var highlighter = require('./lib/');
+
+var hl = highlighter.text(
+    'In JavaScript, you can define a callback handler in regex string replace operations',
+    'callback handler in operations'
+);
+
+console.log(hl.text);
+// In JavaScript, you can define a <strong>callback handler in</strong> regex string replace <strong>operations</strong>
+```
+
+### Highlight html documents
+```javascript
+var hl = highlighter.html(
+    '<em>Eat drink and be merry</em> for tomorrow we die',
+    'merry for tomorrow'
+);
+
+console.log(hl);
+// <em>Eat drink and be <strong>merry</strong></em><strong class="secondary"> for tomorrow</strong> we die
+```
