@@ -1,6 +1,7 @@
 {
   "name": "document-highlighter",
   "version": "1.0.1",
+  "description": "Highlight a search-query in a HTML document",
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
   "bin": {
     "server": "./bin/server"
