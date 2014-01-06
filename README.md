@@ -32,17 +32,19 @@ var hl = highlighter.text(
 );
 
 console.log(hl.text);
-"In JavaScript, you can define a <strong>callback handler in</strong> regex string replace <strong>operations</strong>"
+// "In JavaScript, you can define a <strong>callback handler in</strong> regex string replace <strong>operations</strong>"
 
 console.log(hl.indexes);
-[
-  { startIndex: 32, endIndex: 51, content: 'callback handler in' },
-  { startIndex: 73, endIndex: 83, content: 'operations' } 
-]
+// [
+//   { startIndex: 32, endIndex: 51, content: 'callback handler in' },
+//   { startIndex: 73, endIndex: 83, content: 'operations' } 
+// ]
 ```
 
 ### Highlight html documents
 ```javascript
+var highlighter = require('./lib/');
+
 var hl = highlighter.html(
     '<em>Eat drink and be merry</em> for tomorrow we die',
     'merry for tomorrow'
@@ -50,4 +52,7 @@ var hl = highlighter.html(
 
 console.log(hl.html);
 // <em>Eat drink and be <strong>merry</strong></em><strong class="secondary"> for tomorrow</strong> we die
+
+console.log(hl.text);
+// Eat drink and be <strong>merry for tomorrow</strong> we die
 ```
