@@ -24,6 +24,10 @@ describe('Highlight options', function() {
     documentHighlight.text("my text", "text", {before: '^', after: '$'}).text.should.eql("my ^text$");
   });
 
+  it('should allow override of beforeSecond', function() {
+    documentHighlight.html("my <strong>text is awesome</strong>", "my text", {before: '<span>', beforeSecond:'<span class=sec>', after: '</span>'}).should.eql("<span>my </span><strong><span class=sec>text</span> is awesome</strong>");
+  });
+
   it('should load language datas', function() {
     // No match in en
     documentHighlight.text("my téxt", "text", {language: "en"}).text.should.eql("my téxt");
