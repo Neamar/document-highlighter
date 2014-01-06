@@ -42,6 +42,6 @@ var hl = highlighter.html(
     'merry for tomorrow'
 );
 
-console.log(hl);
+console.log(hl.html);
 // <em>Eat drink and be <strong>merry</strong></em><strong class="secondary"> for tomorrow</strong> we die
 ```

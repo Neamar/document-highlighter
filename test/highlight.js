@@ -13,7 +13,7 @@ var generateTextIt = function(description, text, query, options, expected) {
 var generateHtmlIt = function(description, text, query, options, expected) {
   it(description, function() {
     var ret = documentHighlight.html(text, query, options);
-    ret.should.eql(expected);
+    ret.html.should.eql(expected);
   });
 };
 
