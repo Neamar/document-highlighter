@@ -1,6 +1,6 @@
 {
   "name": "document-highlighter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
   "bin": {
     "server": "./bin/server"
@@ -24,8 +24,7 @@
     "queries",
     "search"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "1.15.x",
     "should": "2.1.x"
