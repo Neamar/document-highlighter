@@ -1,15 +1,10 @@
 {
   "name": "document-highlighter",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "Highlight a search-query in a HTML document",
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
-  "bin": {
-    "server": "./bin/server"
-  },
   "scripts": {
-    "start": "node ./bin/server",
     "test": "NODE_ENV=test mocha -R spec test/",
-    "lint": "jshint lib/ test/",
     "coverage": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/"
   },
   "main": "./lib",
