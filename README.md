@@ -24,7 +24,7 @@ When highlighted for the query `it contains some italic empty` will become:
 ## Usage
 ### Highlight text documents
 ```javascript
-var highlighter = require('./lib/');
+var highlighter = require('document-highlighter');
 
 var hl = highlighter.text(
     'In JavaScript, you can define a callback handler in regex string replace operations',
@@ -43,7 +43,7 @@ console.log(hl.indexes);
 
 ### Highlight html documents
 ```javascript
-var highlighter = require('./lib/');
+var highlighter = require('document-highlighter');
 
 var hl = highlighter.html(
     '<em>Eat drink and be merry</em> for tomorrow we die',
@@ -59,7 +59,7 @@ console.log(hl.text);
 
 ### Customize highlight markup
 ```javascript
-var highlighter = require('./lib/');
+var highlighter = require('document-highlighter');
 
 var hl = highlighter.text(
     'In JavaScript, you can define a callback handler in regex string replace operations',
@@ -75,3 +75,18 @@ console.log(hl.text);
 ```
 
 > Note: in HTML mode, your highlight may be split up in multiple items in order to keep your existing markup. The default is to add a `.secondary` class; but you can override this using the `beforeSecond` key in the option.
+
+In some case, you may want to customize highlighting for all calls to the highlighter. You can use `defaultOptions` parameter. Be careful however, you cannot override this with a new object; you need to update the keys one by one.
+
+```javascript
+var highlighter = require('document-highlighter');
+highlighter.defaultOptions.before = '<span class="hlt">';
+highlighter.defaultOptions.after = '</span>';
+
+var hl = highlighter.text(
+    'In JavaScript, you can define a callback handler in regex string replace operations',
+    'callback handler in operations'
+);
+
+console.log(hl.text);
+// "In JavaScript, you can define a <span class="hlt">callback handler in</span> regex string replace <span class="hlt">operations</span>"
