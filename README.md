@@ -56,3 +56,22 @@ console.log(hl.html);
 console.log(hl.text);
 // Eat drink and be <strong>merry for tomorrow</strong> we die
 ```
+
+### Customize highlight markup
+```javascript
+var highlighter = require('./lib/');
+
+var hl = highlighter.text(
+    'In JavaScript, you can define a callback handler in regex string replace operations',
+    'callback handler in operations',
+    {
+        before: '<span class="hlt">',
+        after: '</span>',
+    }
+);
+
+console.log(hl.text);
+// "In JavaScript, you can define a <span class="hlt">callback handler in</span> regex string replace <span class="hlt">operations</span>"
+```
+
+> Note: in HTML mode, your highlight may be split up in multiple items in order to keep your existing markup. The default is to add a `.secondary` class; but you can override this using the `beforeSecond` key in the option.
