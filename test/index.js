@@ -28,6 +28,19 @@ describe('Highlight options', function() {
     documentHighlight.html("my <strong>text is awesome</strong>", "my text", {before: '<span>', beforeSecond:'<span class=sec>', after: '</span>'}).html.should.eql("<span>my </span><strong><span class=sec>text</span> is awesome</strong>");
   });
 
+  it('should allow global override of before and after', function() {
+    var defaultDefaultOptionsBefore = documentHighlight.defaultOptions.before;
+    var defaultDefaultOptionsAfter = documentHighlight.defaultOptions.after;
+    documentHighlight.defaultOptions.before = 'g^';
+    documentHighlight.defaultOptions.after = 'g$';
+
+    documentHighlight.text("my text", "text").text.should.eql("my g^textg$");
+
+    // Restore default options
+    documentHighlight.defaultOptions.before = defaultDefaultOptionsBefore;
+    documentHighlight.defaultOptions.after = defaultDefaultOptionsAfter;
+  });
+
   it('should load language datas', function() {
     // No match in en
     documentHighlight.text("my téxt", "text", {language: "en"}).text.should.eql("my téxt");
