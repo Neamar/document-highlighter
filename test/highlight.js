@@ -112,6 +112,16 @@ describe('Standard mode', function() {
         query: 'eat drink',
         expected: '*Eat, drink* and be merry',
       },
+      'should allow for numbers': {
+        text: 'Similarity algorithm bm25 is awesome.',
+        query: 'bm25',
+        expected: 'Similarity algorithm *bm25* is awesome.',
+      },
+      'should allow for symbols': {
+        text: 'FILE #BA/15/42',
+        query: 'file ba 15 42',
+        expected: '*FILE* #*BA*/*15*/*42*',
+      },
       'should highlight multiple paragraphs': {
         text: 'Hello and welcome to the real world, Neo.\nTrinity will be there soon.',
         query: 'Neo Trinity',
