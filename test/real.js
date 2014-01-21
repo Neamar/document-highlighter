@@ -23,4 +23,13 @@ describe("Large file", function() {
     complex.html.should.include('<span class="_ _5"> </span><span style="background-color:yellow">Agiir</span> <span class="_ _5"> </span>N<span class="_ _4"></span>e<span class="_ _0"></span>tw<span class="_ _2">');
     complex.html.should.include('<div class="t m0 x7 h8 y12 ff3 fs3 fc1 sc0 ls0 ws0"><span style="background-color:yellow">PHP</span> (nat<span class="_ _4"></span>i<span class="_ _0"></span>f');
   });
+
+  // it.only('real case test', function() {
+  //   // Put your input file here
+  //   var html = fs.readFileSync('/tmp/file.html').toString();
+  //   var ch = documentHighlight.html(html, 'Pégase', highlightOptions);
+
+  //   // retrieve output here
+  //   fs.writeFileSync('/tmp/file-hl.html', ch.html);
+  // });
 });
