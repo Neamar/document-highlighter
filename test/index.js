@@ -4,14 +4,11 @@ require('should');
 var documentHighlight = require('../lib');
 
 describe('Highlight query', function() {
-  it('should be mandatory', function() {
-    try {
-      documentHighlight.text("my text");
-    } catch(e) {
-      return;
-    }
+  it('can be empty', function() {
+    var text = "some sample text";
 
-    throw new Error("Query should be mandatory");
+    var ret = documentHighlight.text(text);
+    ret.should.equal(text);
   });
 });
 
