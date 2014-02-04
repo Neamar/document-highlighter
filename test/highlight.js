@@ -67,6 +67,16 @@ describe('Standard mode', function() {
           language: 'fr'
         }
       },
+      'should use insensitive unicode mapping for the text': {
+        text: 'Vous souhaitez RÉGLER votre loyer, constituer votre épargne ou effectuer un virement régulier ?',
+        query: 'régler votre loyer',
+        expected: 'Vous souhaitez *RÉGLER votre loyer*, constituer votre épargne ou effectuer un virement régulier ?',
+        options: {
+          before: '*',
+          after: '*',
+          language: 'fr'
+        }
+      },
       'should use unicode mapping for the query': {
         text: 'Vous souhaitez regler votre loyer, constituer votre épargne ou effectuer un virement régulier ?',
         query: 'régler votre loyer',
