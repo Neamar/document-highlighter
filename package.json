@@ -1,6 +1,6 @@
 {
   "name": "document-highlighter",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Highlight a search-query in a HTML document",
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
   "scripts": {
