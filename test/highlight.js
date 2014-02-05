@@ -164,7 +164,7 @@ describe('Standard mode', function() {
     });
   });
 
-  describe.only('with HTML content', function() {
+  describe('with HTML content', function() {
     var its = {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
@@ -211,16 +211,16 @@ describe('Standard mode', function() {
         query: 'Neo Trinity',
         expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
       },
-      // 'should allow overriding of before for 2-parts highlights': {
-      //   text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
-      //   query: 'Neo Trinity',
-      //   options: {
-      //     before: '<span>',
-      //     beforeSecond: '<span class=secondary>',
-      //     after: '</span>',
-      //   },
-      //   expected: '<p>Hello and welcome to the real world, <span>Neo</span>.</p><p><span class=secondary>Trinity</span> will be there soon.</p>',
-      // },
+      'should allow overriding of before for 2-parts highlights': {
+        text: '<p>Hello and welcome to the real world, Neo. </p><p>Trinity will be there soon.</p>',
+        query: 'Neo Trinity',
+        options: {
+          before: '<span>',
+          beforeSecond: '<span class=secondary>',
+          after: '</span>',
+        },
+        expected: '<p>Hello and welcome to the real world, <span>Neo. </span></p><p><span class=secondary>Trinity</span> will be there soon.</p>',
+      },
     };
     generateIts(its, generateHtmlIt);
 
