@@ -230,7 +230,12 @@ describe('Standard mode', function() {
           after: '</span>',
         },
         expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
-      }
+      },
+      // 'should not fail on block markup': {
+      //   text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
+      //   query: 'world Neo Trinity',
+      //   expected: 'Hello and welcome to the real <span>world<div>Neo</div> and Trinity.',
+      // }
     };
     generateIts(its, generateHtmlIt);
 

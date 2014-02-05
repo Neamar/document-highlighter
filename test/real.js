@@ -27,7 +27,7 @@ describe("Large file", function() {
   // it.only('real case test', function() {
   //   // Put your input file here
   //   var html = fs.readFileSync('/tmp/file.html').toString();
-  //   var ch = documentHighlight.html(html, 'Pégase', highlightOptions);
+  //   var ch = documentHighlight.html(html, 'Projet', highlightOptions);
 
   //   // retrieve output here
   //   fs.writeFileSync('/tmp/file-hl.html', ch.html);
