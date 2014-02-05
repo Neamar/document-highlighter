@@ -221,6 +221,16 @@ describe('Standard mode', function() {
         query: 'Neo Trinity',
         expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
       },
+      'should use secondary highlight': {
+        text: '<strong>Hello and welcome to the real world</strong> Neo.',
+        query: 'world Neo',
+        options: {
+          before: '<span>',
+          beforeSecond: '<span class=secondary>',
+          after: '</span>',
+        },
+        expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
+      }
     };
     generateIts(its, generateHtmlIt);
 
