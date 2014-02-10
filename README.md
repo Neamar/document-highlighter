@@ -18,12 +18,14 @@ When highlighted for the query `The index analysis string` will become:
 
 > **The index analysis** module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query **strings**. It maps to the Lucene Analyzer.
 
+Note generated markup is minimal (one item per match, and not one item per word)
+
 #### Stopwords
 Document highlighter handle stopwords and punctuation according to the language specified. For instance, the following text:
 
 > Install this library, and start using it.
 
-When highlighted for the query "install library" will become:
+When highlighted for the query `install library` will become:
 
 > **Install this library**, and start using it.
 
@@ -106,3 +108,4 @@ var hl = highlighter.text(
 
 console.log(hl.text);
 // "In JavaScript, you can define a <span class="hlt">callback handler in</span> regex string replace <span class="hlt">operations</span>"
+```
