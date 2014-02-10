@@ -4,13 +4,22 @@ require('should');
 var documentHighlight = require('../lib');
 
 describe('Highlight query', function() {
-  it('can be empty', function() {
+  it('can be empty in text mode', function() {
     var text = "some sample text";
 
     var ret = documentHighlight.text(text);
     ret.should.have.keys(['text', 'indexes']);
     ret.text.should.equal(text);
     ret.indexes.should.eql([]);
+  });
+
+  it('can be empty in HTML mode', function() {
+    var html = "some <strong>sample</strong> text";
+
+    var ret = documentHighlight.html(html);
+    ret.should.have.keys(['text', 'html']);
+    ret.text.should.equal("some sample text");
+    ret.html.should.eql(html);
   });
 });
 
