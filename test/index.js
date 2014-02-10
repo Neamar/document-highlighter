@@ -8,7 +8,9 @@ describe('Highlight query', function() {
     var text = "some sample text";
 
     var ret = documentHighlight.text(text);
-    ret.should.equal(text);
+    ret.should.have.keys(['text', 'indexes']);
+    ret.text.should.equal(text);
+    ret.indexes.should.eql([]);
   });
 });
 
