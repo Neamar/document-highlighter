@@ -92,9 +92,9 @@ console.log(hl.text);
 // "In JavaScript, you can define a <span class="hlt">callback handler in</span> regex string replace <span class="hlt">operations</span>"
 ```
 
-> Note: in HTML mode, your highlight may be split up in multiple items in order to keep your existing markup. The default is to add a `.secondary` class; but you can override this using the `beforeSecond` key in the option.
+> Note: in HTML mode, your highlight may be split up in multiple items in order to keep your existing markup (block level elements stop inline highlighting). The default is to add a `.secondary` class; but you can override this using the `beforeSecond` key in the option.
 
-In some case, you may want to customize highlighting for all calls to the highlighter. You can use `defaultOptions` parameter. Be careful however, you cannot override this with a new object; you need to update the keys one by one.
+In some case, you may want to customize highlighting for all calls to the highlighter. You can use `defaultOptions` parameter. Note you cannot directly override this with a new object; you need to update the keys one by one.
 
 ```javascript
 var highlighter = require('document-highlighter');
