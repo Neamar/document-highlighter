@@ -164,7 +164,7 @@ describe('Standard mode', function() {
     });
   });
 
-  describe('with HTML content', function() {
+  describe.only('with HTML content', function() {
     var its = {
       'should not modify non-matching text': {
         text: 'Hello and <span>welcome to the</span> real world, Neo',
@@ -230,6 +230,11 @@ describe('Standard mode', function() {
           after: '</span>',
         },
         expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
+      },
+      'should skip markup with non-textual content': {
+        text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
+        query: 'font',
+        expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
       },
       // 'should not fail on block markup': {
       //   text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
