@@ -231,6 +231,11 @@ describe('Standard mode', function() {
         },
         expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
       },
+      'should skip markup with non-textual content': {
+        text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
+        query: 'font',
+        expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
+      },
       // 'should not fail on block markup': {
       //   text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
       //   query: 'world Neo Trinity',
