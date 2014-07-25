@@ -308,13 +308,3 @@ describe('Standard mode', function() {
     });
   });
 });
-
-describe.skip('Strict mode', function() {
-  describe('with text content', function() {
-
-  });
-
-  describe('with HTML content', function() {
-
-  });
-});
