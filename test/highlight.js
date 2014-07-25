@@ -236,11 +236,11 @@ describe('Standard mode', function() {
         query: 'font',
         expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
       },
-      // 'should not fail on block markup': {
-      //   text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
-      //   query: 'world Neo Trinity',
-      //   expected: 'Hello and welcome to the real <span>world<div>Neo</div> and Trinity.',
-      // }
+      'should not fail on block markup': {
+        text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
+        query: 'world Neo Trinity',
+        expected: 'Hello and welcome to the real *world*<div>*Neo*</div>* and Trinity*.',
+      }
     };
     generateIts(its, generateHtmlIt);
 
