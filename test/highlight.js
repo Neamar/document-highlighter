@@ -164,78 +164,78 @@ describe('Standard mode', function() {
     });
   });
 
-  describe('with HTML content', function() {
+  describe.only('with HTML content', function() {
     var its = {
-      'should not modify non-matching text': {
-        text: 'Hello and <span>welcome to the</span> real world, Neo',
-        query: 'non matching query',
-        expected: 'Hello and <span>welcome to the</span> real world, Neo'
-      },
-      'should highlight and maintain HTML': {
-        text: '<strong>Hello</strong> and welcome to the real world, Neo',
-        query: 'welcome to the real world',
-        expected: '<strong>Hello</strong> and *welcome to the real world*, Neo',
-      },
-      'should highlight and maintain HTML inside query': {
-        text: 'Hello and welcome to the <strong>real</strong> world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to the <strong>real</strong> world*, Neo',
-      },
-      'should highlight and maintain HTML inside query in edge case': {
-        text: 'Hello and welcome to the <strong>real world</strong>, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
-      },
-      'should match multiples fragments': {
-        text: 'In JavaScript, <em>you can define a callback handler in regex</em> string replace operations',
-        query: 'callback handler operations',
-        expected: 'In JavaScript, <em>you can define a *callback handler* in regex</em> string replace *operations*',
-      },
-      'should skip empty HTML': {
-        text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to<span class="a_0__0"></span> the real world*, Neo',
-      },
-      'should skip embedded empty HTML': {
-        text: 'Hello and wel<span class="a_0__0"></span>come to the real world, Neo',
-        query: 'welcome to the real world',
-        expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
-      },
-      'should return well-formed HTML': {
-        text: 'Hello and welcome to <strong>the real world, Neo</strong>',
-        query: 'welcome to the real world',
-        expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
-      },
+      // 'should not modify non-matching text': {
+      //   text: 'Hello and <span>welcome to the</span> real world, Neo',
+      //   query: 'non matching query',
+      //   expected: 'Hello and <span>welcome to the</span> real world, Neo'
+      // },
+      // 'should highlight and maintain HTML': {
+      //   text: '<strong>Hello</strong> and welcome to the real world, Neo',
+      //   query: 'welcome to the real world',
+      //   expected: '<strong>Hello</strong> and *welcome to the real world*, Neo',
+      // },
+      // 'should highlight and maintain HTML inside query': {
+      //   text: 'Hello and welcome to the <strong>real</strong> world, Neo',
+      //   query: 'welcome to the real world',
+      //   expected: 'Hello and *welcome to the <strong>real</strong> world*, Neo',
+      // },
+      // 'should highlight and maintain HTML inside query in edge case': {
+      //   text: 'Hello and welcome to the <strong>real world</strong>, Neo',
+      //   query: 'welcome to the real world',
+      //   expected: 'Hello and *welcome to the <strong>real world</strong>*, Neo',
+      // },
+      // 'should match multiples fragments': {
+      //   text: 'In JavaScript, <em>you can define a callback handler in regex</em> string replace operations',
+      //   query: 'callback handler operations',
+      //   expected: 'In JavaScript, <em>you can define a *callback handler* in regex</em> string replace *operations*',
+      // },
+      // 'should skip empty HTML': {
+      //   text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
+      //   query: 'welcome to the real world',
+      //   expected: 'Hello and *welcome to<span class="a_0__0"></span> the real world*, Neo',
+      // },
+      // 'should skip embedded empty HTML': {
+      //   text: 'Hello and wel<span class="a_0__0"></span>come to the real world, Neo',
+      //   query: 'welcome to the real world',
+      //   expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
+      // },
+      // 'should return well-formed HTML': {
+      //   text: 'Hello and welcome to <strong>the real world, Neo</strong>',
+      //   query: 'welcome to the real world',
+      //   expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
+      // },
       'should highlight multiple paragraphs': {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
         query: 'Neo Trinity',
         expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
       },
-      'should handle block elements': {
-        text: '<p>Hello</p><p>Trinity</p>',
-        query: 'Trinity',
-        expected: '<p>Hello</p><p>*Trinity*</p>',
-      },
-      'should handle block elements with punctuation': {
-        text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
-        query: 'Neo Trinity',
-        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
-      },
-      'should use secondary highlight': {
-        text: '<strong>Hello and welcome to the real world</strong> Neo.',
-        query: 'world Neo',
-        options: {
-          before: '<span>',
-          beforeSecond: '<span class=secondary>',
-          after: '</span>',
-        },
-        expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
-      },
-      'should skip markup with non-textual content': {
-        text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
-        query: 'font',
-        expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
-      },
+      // 'should handle block elements': {
+      //   text: '<p>Hello</p><p>Trinity</p>',
+      //   query: 'Trinity',
+      //   expected: '<p>Hello</p><p>*Trinity*</p>',
+      // },
+      // 'should handle block elements with punctuation': {
+      //   text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
+      //   query: 'Neo Trinity',
+      //   expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+      // },
+      // 'should use secondary highlight': {
+      //   text: '<strong>Hello and welcome to the real world</strong> Neo.',
+      //   query: 'world Neo',
+      //   options: {
+      //     before: '<span>',
+      //     beforeSecond: '<span class=secondary>',
+      //     after: '</span>',
+      //   },
+      //   expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
+      // },
+      // 'should skip markup with non-textual content': {
+      //   text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
+      //   query: 'font',
+      //   expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
+      // },
       // 'should not fail on block markup': {
       //   text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
       //   query: 'world Neo Trinity',
@@ -244,7 +244,7 @@ describe('Standard mode', function() {
     };
     generateIts(its, generateHtmlIt);
 
-    it('should fail on invalid markup', function() {
+    it.skip('should fail on invalid markup', function() {
       try {
         documentHighlight.html("<hello world", "world");
       } catch(e) {
@@ -254,7 +254,7 @@ describe('Standard mode', function() {
       throw new Error("Invalid markup should not be parsed");
     });
 
-    describe('in edge cases with existing markup', function() {
+    describe.skip('in edge cases with existing markup', function() {
       // [---] is the highlight query,
       // (---) the existing markup
       var its = {
