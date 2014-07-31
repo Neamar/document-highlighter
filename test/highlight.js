@@ -209,7 +209,7 @@ describe('Standard mode', function() {
       'should highlight multiple paragraphs': {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
         query: 'Neo Trinity',
-        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+        expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
       },
       'should handle block elements': {
         text: '<p>Hello</p><p>Trinity</p>',
@@ -219,7 +219,7 @@ describe('Standard mode', function() {
       'should handle block elements with punctuation': {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
         query: 'Neo Trinity',
-        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+        expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
       },
       'should use secondary highlight': {
         text: '<strong>Hello and welcome to the real world</strong> Neo.',
