@@ -18,10 +18,10 @@ When highlighted for the query `The index analysis string` will become:
 
 > **The index analysis** module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query **strings**. It maps to the Lucene Analyzer.
 
-Note generated markup is minimal (one item per match, and not one item per word)
+Note generated markup is minimal (one item per match, and not one item per word).
 
 #### Stopwords
-Document highlighter handle stopwords and punctuation according to the language specified. For instance, the following text:
+Document highlighter handles stopwords and punctuation according to the language specified. For instance, the following text:
 
 > Install this library, and start using it.
 
@@ -37,10 +37,10 @@ This also works for HTML documents, e.g. :
 When highlighted for the query `it contains some italic empty` will become:
 > This document **contains _italics_** and stuff.
 
-Document highlighter maintain original markup and add wrapping tags as needed.
+Document highlighter maintains original markup and add wrapping tags as needed.
 
 ## Usage
-### Highlight text documents
+### Highlight plain text documents
 ```javascript
 var highlighter = require('document-highlighter');
 
@@ -55,11 +55,11 @@ console.log(hl.text);
 console.log(hl.indexes);
 // [
 //   { startIndex: 32, endIndex: 51, content: 'callback handler in' },
-//   { startIndex: 73, endIndex: 83, content: 'operations' } 
+//   { startIndex: 73, endIndex: 83, content: 'operations' }
 // ]
 ```
 
-### Highlight html documents
+### Highlight HTML documents
 ```javascript
 var highlighter = require('document-highlighter');
 
