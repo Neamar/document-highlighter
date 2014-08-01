@@ -236,18 +236,11 @@ describe('Standard mode', function() {
         query: 'font',
         expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
       },
-      'should not fail on block markup': {
+      'should not break block markup in the middle of a match': {
         text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
         query: 'world Neo Trinity',
-        expected: 'Hello and welcome to the real *world *<div>*Neo*</div>* and Trinity*.',
+        expected: 'Hello and welcome to the real *world *<div>*Neo*</div> and *Trinity*.',
       }
-
-      // TODO
-      // 'should not fail on sentences ending with stop words': {
-      //   text: 'I <p>write unicorns this</p> sentence makes no sense.',
-      //   query: 'unicorns sentence',
-      //   expected: 'I <p>write *unicorns this*</p> *sentence* makes no sense.',
-      // }
     };
     generateIts(its, generateHtmlIt);
 
