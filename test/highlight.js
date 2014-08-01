@@ -159,7 +159,7 @@ describe('Standard mode', function() {
 
       var expected = {
         text: '<strong>Farewell</strong> and welcome to the real <strong>world</strong>.',
-        indexes: [
+        indices: [
           { startIndex: 0, endIndex: 8, content: 'Farewell'},
           { startIndex: 33, endIndex: 38, content: 'world'}
         ]
