@@ -241,7 +241,7 @@ describe('Standard mode', function() {
         query: 'font',
         expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
       },
-      'should not allow block markup in the middle of a match': {
+      'should not allow block markup to get caught in the middle of a match': {
         text: 'Hello and welcome to the real world <div>Neo</div>and Trinity.',
         query: 'world Neo Trinity',
         expected: 'Hello and welcome to the real *world *<div>*Neo*</div>*and Trinity*.',
@@ -257,6 +257,14 @@ describe('Standard mode', function() {
       }
 
       throw new Error("Invalid markup should not be parsed");
+    });
+
+    it('should add a complimentary space character if needed', function() {
+      var html = '<p><span class="greeting">Hello</span> and welcome<br/>to the real world, Neo</p>';
+      var query = 'welcome to the real world';
+      var expected = 'Hello and *welcome to the real world*, Neo ';
+      var ret = documentHighlight.html(html, query, { before: '*', after: '*' });
+      ret.text.should.eql(expected);
     });
 
     describe('in edge cases with existing markup', function() {
