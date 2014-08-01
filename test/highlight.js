@@ -118,9 +118,9 @@ describe('Standard mode', function() {
         expected: 'Hello and *farewell to the real world*, Neo',
       },
       'should allow for multiple consecutive whitespace characters': {
-        text: 'Eat,   drink and be merry',
+        text: 'Unicorns eat,   drink and are merry',
         query: 'eat drink',
-        expected: '*Eat,   drink* and be merry',
+        expected: 'Unicorns *eat,   drink* and are merry',
       },
       'should allow for punctuations': {
         text: 'Eat, drink and be merry',
@@ -241,11 +241,11 @@ describe('Standard mode', function() {
         query: 'font',
         expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
       },
-      // 'should not break block markup in the middle of a match': {
-      //   text: 'Hello and welcome to the real world <div>Neo</div>and Trinity.',
-      //   query: 'world Neo Trinity',
-      //   expected: 'Hello and welcome to the real *world *<div>*Neo*</div>and *Trinity*.',
-      // }
+      'should not allow block markup in the middle of a match': {
+        text: 'Hello and welcome to the real world <div>Neo</div>and Trinity.',
+        query: 'world Neo Trinity',
+        expected: 'Hello and welcome to the real *world *<div>*Neo*</div>*and Trinity*.',
+      }
     };
     generateIts(its, generateHtmlIt);
 
