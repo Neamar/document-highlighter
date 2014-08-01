@@ -8,9 +8,9 @@ describe('Highlight query', function() {
     var text = "some sample text";
 
     var ret = documentHighlight.text(text);
-    ret.should.have.keys(['text', 'indexes']);
+    ret.should.have.keys(['text', 'indices']);
     ret.text.should.equal(text);
-    ret.indexes.should.eql([]);
+    ret.indices.should.eql([]);
   });
 
   it('can be empty in HTML mode', function() {

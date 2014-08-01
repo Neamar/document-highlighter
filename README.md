@@ -52,7 +52,7 @@ var hl = highlighter.text(
 console.log(hl.text);
 // "In JavaScript, you can define a <strong>callback handler in</strong> regex string replace <strong>operations</strong>"
 
-console.log(hl.indexes);
+console.log(hl.indices);
 // [
 //   { startIndex: 32, endIndex: 51, content: 'callback handler in' },
 //   { startIndex: 73, endIndex: 83, content: 'operations' }
