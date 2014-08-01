@@ -209,7 +209,7 @@ describe('Standard mode', function() {
       'should highlight multiple paragraphs': {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
         query: 'Neo Trinity',
-        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+        expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
       },
       'should handle block elements': {
         text: '<p>Hello</p><p>Trinity</p>',
@@ -219,7 +219,7 @@ describe('Standard mode', function() {
       'should handle block elements with punctuation': {
         text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
         query: 'Neo Trinity',
-        expected: '<p>Hello and welcome to the real world, *Neo*.</p><p>*Trinity* will be there soon.</p>',
+        expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
       },
       'should use secondary highlight': {
         text: '<strong>Hello and welcome to the real world</strong> Neo.',
@@ -236,10 +236,17 @@ describe('Standard mode', function() {
         query: 'font',
         expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
       },
-      // 'should not fail on block markup': {
-      //   text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
-      //   query: 'world Neo Trinity',
-      //   expected: 'Hello and welcome to the real <span>world<div>Neo</div> and Trinity.',
+      'should not fail on block markup': {
+        text: 'Hello and welcome to the real world <div>Neo</div> and Trinity.',
+        query: 'world Neo Trinity',
+        expected: 'Hello and welcome to the real *world *<div>*Neo*</div> and *Trinity*.',
+      },
+
+      // TODO
+      // 'should not fail on sentences ending with stop words': {
+      //   text: 'I <p>write unicorns this</p> sentence makes no sense.',
+      //   query: 'unicorns sentence',
+      //   expected: 'I <p>write *unicorns this*</p> *sentence* makes no sense.',
       // }
     };
     generateIts(its, generateHtmlIt);
