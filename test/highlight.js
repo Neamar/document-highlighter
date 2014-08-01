@@ -315,13 +315,3 @@ describe('Standard mode', function() {
     });
   });
 });
-
-describe('Strict mode', function() {
-  describe('with text content', function() {
-
-  });
-
-  describe('with HTML content', function() {
-
-  });
-});
