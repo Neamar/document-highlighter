@@ -262,7 +262,7 @@ describe('Standard mode', function() {
     it('should add a complimentary space character if needed', function() {
       var html = '<p><span class="greeting">Hello</span> and welcome<br/>to the real world, Neo</p>';
       var query = 'welcome to the real world';
-      var expected = 'Hello and *welcome to the real world*, Neo ';
+      var expected = 'Hello and *welcome to the real world*, Neo';
       var ret = documentHighlight.html(html, query, { before: '*', after: '*' });
       ret.text.should.eql(expected);
     });
