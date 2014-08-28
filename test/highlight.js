@@ -37,6 +37,11 @@ describe('Standard mode', function() {
         query: 'non matching query',
         expected: 'Hello and welcome to the real world, Neo'
       },
+      'should do nothing with the empty query': {
+        text: 'Hello and welcome to the real world, Neo',
+        query: '',
+        expected: 'Hello and welcome to the real world, Neo'
+      },
       'should highlight relevant text': {
         text: 'Hello and welcome to the real world, Neo',
         query: 'welcome to the real world',
