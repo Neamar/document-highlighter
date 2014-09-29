@@ -211,6 +211,11 @@ describe('Standard mode', function() {
         query: 'welcome to the real world',
         expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
       },
+      'should work with dirty HTML': {
+        text: 'Hello and wel<>come <!-- -->to the real world, Neo',
+        query: 'Neo',
+        expected: 'Hello and wel<>come <!-- -->to the real world, *Neo*',
+      },
       'should return well-formed HTML': {
         text: 'Hello and welcome to <strong>the real world, Neo</strong>',
         query: 'welcome to the real world',
