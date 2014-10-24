@@ -201,6 +201,11 @@ describe('Standard mode', function() {
         query: 'callback handler operations',
         expected: 'In JavaScript, <em>you can define a *callback handler* in regex</em> string replace *operations*',
       },
+      'should match multiples fragments in blocks': {
+        text: '<div>alex</div><div><br></div>alex',
+        query: 'alex',
+        expected: '<div>*alex*</div><div><br></div>*alex*',
+      },
       'should skip empty HTML': {
         text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
         query: 'welcome to the real world',
