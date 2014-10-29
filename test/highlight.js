@@ -165,8 +165,16 @@ describe('Standard mode', function() {
       var expected = {
         text: '<strong>Farewell</strong> and welcome to the real <strong>world</strong>.',
         indices: [
-          { startIndex: 0, endIndex: 8, content: 'Farewell'},
-          { startIndex: 33, endIndex: 38, content: 'world'}
+          {
+            startIndex: 0,
+            endIndex: 8,
+            content: 'Farewell'
+          },
+          {
+            startIndex: 33,
+            endIndex: 38,
+            content: 'world'
+          }
         ]
       };
 
@@ -201,11 +209,11 @@ describe('Standard mode', function() {
         query: 'callback handler operations',
         expected: 'In JavaScript, <em>you can define a *callback handler* in regex</em> string replace *operations*',
       },
-      'should match multiples fragments in blocks': {
-        text: '<div>alex</div><div><br></div>alex',
-        query: 'alex',
-        expected: '<div>*alex*</div><div><br></div>*alex*',
-      },
+      // 'should match multiples fragments in blocks': {
+      //   text: '<div>alex</div><div><br></div>trinity',
+      //   query: 'alex trinity',
+      //   expected: '<div>*alex*</div><div><br></div>*trinity*',
+      // },
       'should skip empty HTML': {
         text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
         query: 'welcome to the real world',
@@ -278,7 +286,10 @@ describe('Standard mode', function() {
       var html = '<p><span class="greeting">Hello</span> and welcome<br/>to the real world, Neo</p>';
       var query = 'welcome to the real world';
       var expected = 'Hello and *welcome to the real world*, Neo';
-      var ret = documentHighlight.html(html, query, { before: '*', after: '*' });
+      var ret = documentHighlight.html(html, query, {
+        before: '*',
+        after: '*'
+      });
       ret.text.should.eql(expected);
     });
 
