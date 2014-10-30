@@ -8,7 +8,12 @@ describe("Large file", function() {
   this.timeout(100);
 
 
-  var highlightOptions = {before:'<span style="background-color:yellow">', after:"</span>", language: 'fr'};
+  var highlightOptions = {
+    before: '<span style="background-color:yellow">',
+    after: "</span>",
+    language: 'fr'
+  };
+
   var html = fs.readFileSync(__dirname + '/sample/complex.html').toString();
 
   it("should work in real time for simple queries", function() {
