@@ -270,9 +270,9 @@ describe('Standard mode', function() {
         expected: 'Hello and welcome to the real *world *<div>*Neo*</div>*and Trinity*.',
       },
       'should allow for self closing noClosing elements': {
-        text: '<html><head title="foo" /><body>Hello and welcome to the real world Neo< and Trinity.</body></html>',
+        text: '<html><head title="foo" /><body>Hello and welcome to the real world Neo and Trinity.</body></html>',
         query: 'Neo Trinity',
-        expected: 'Hello and welcome to the real *world *<div>*Neo*</div>*and Trinity*.',
+        expected: '<html><head title="foo" /><body>Hello and welcome to the real world *Neo and Trinity*.</body></html>',
       }
     };
     generateIts(its, generateHtmlIt);
