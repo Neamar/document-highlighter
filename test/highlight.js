@@ -273,6 +273,11 @@ describe('Standard mode', function() {
         text: '<html><head title="foo" /><body>Hello and welcome to the real world Neo and Trinity.</body></html>',
         query: 'Neo Trinity',
         expected: '<html><head title="foo" /><body>Hello and welcome to the real world *Neo and Trinity*.</body></html>',
+      },
+      'should allow for empty block elements': {
+        text: 'I just sent you a meeting invitation.<div><br></div><div>Mark</div></div>',
+        query: 'Mark',
+        expected: 'I just sent you a meeting invitation.<div><br></div><div>*Mark*</div></div>',
       }
     };
     generateIts(its, generateHtmlIt);
