@@ -4,7 +4,7 @@ require("should");
 var tokenize = require('../../lib/helpers/tokenize.js');
 var languageData = require('../../lib/languages.json').en;
 
-describe.only("tokenize()", function() {
+describe("tokenize()", function() {
   it("should send back tokens", function() {
     var tokens = tokenize("hello world", languageData);
 
