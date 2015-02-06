@@ -33,7 +33,7 @@ describe('Highlight options', function() {
   });
 
   it('should allow override of beforeSecond', function() {
-    documentHighlight.html("my <strong>text is awesome</strong>", "my text", {before: '<span>', beforeSecond:'<span class=sec>', after: '</span>'}).html.should.eql("<span>my </span><strong><span class=sec>text</span> is awesome</strong>");
+    documentHighlight.html("my <strong>text is awesome</strong>", "my text", {before: '<span>', beforeSecond: '<span class=sec>', after: '</span>'}).html.should.eql("<span>my </span><strong><span class=sec>text</span> is awesome</strong>");
   });
 
   it('should allow global override of before and after', function() {
