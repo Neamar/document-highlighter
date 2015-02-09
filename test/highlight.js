@@ -165,16 +165,16 @@ describe('Standard mode', function() {
       var expected = {
         text: '<strong>Farewell</strong> and welcome to the real <strong>world</strong>.',
         indices: [
-          {
-            startIndex: 0,
-            endIndex: 8,
-            content: 'Farewell'
-          },
-          {
-            startIndex: 33,
-            endIndex: 38,
-            content: 'world'
-          }
+        {
+          startIndex: 0,
+          endIndex: 8,
+          content: 'Farewell'
+        },
+        {
+          startIndex: 33,
+          endIndex: 38,
+          content: 'world'
+        }
         ]
       };
 
@@ -259,6 +259,17 @@ describe('Standard mode', function() {
         },
         expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
       },
+      'should use before second and after second highlight': {
+        text: '<i>Hello and welcome to the real world</i> Neo.',
+        query: 'world Neo',
+        expected: '<i>Hello and welcome to the real <strong>world</strong></i><span class=secondary> Neo</span>.',
+        options: {
+          before: '<strong>',
+          after: '</strong>',
+          beforeSecond: '<span class=secondary>',
+          afterSecond: '</span>',
+        }
+      },
       'should skip markup with non-textual content': {
         text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
         query: 'font',
@@ -278,7 +289,7 @@ describe('Standard mode', function() {
         text: 'I just sent you a meeting invitation.<div><br></div><div>Mark</div></div>',
         query: 'Mark',
         expected: 'I just sent you a meeting invitation.<div><br></div><div>*Mark*</div></div>',
-      }
+      },
     };
     generateIts(its, generateHtmlIt);
 
