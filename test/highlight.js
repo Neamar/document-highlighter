@@ -209,162 +209,162 @@ describe('Standard mode', function() {
         query: 'callback handler operations',
         expected: 'In JavaScript, <em>you can define a *callback handler* in regex</em> string replace *operations*',
       },
-        // 'should match multiples fragments in blocks': {
-        //   text: '<div>alex</div><div><br></div>trinity',
-        //   query: 'alex trinity',
-        //   expected: '<div>*alex*</div><div><br></div>*trinity*',
-        // },
-        'should skip empty HTML': {
-          text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
-          query: 'welcome to the real world',
-          expected: 'Hello and *welcome to<span class="a_0__0"></span> the real world*, Neo',
+      // 'should match multiples fragments in blocks': {
+      //   text: '<div>alex</div><div><br></div>trinity',
+      //   query: 'alex trinity',
+      //   expected: '<div>*alex*</div><div><br></div>*trinity*',
+      // },
+      'should skip empty HTML': {
+        text: 'Hello and welcome to<span class="a_0__0"></span> the real world, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to<span class="a_0__0"></span> the real world*, Neo',
+      },
+      'should skip embedded empty HTML': {
+        text: 'Hello and wel<span class="a_0__0"></span>come to the real world, Neo',
+        query: 'welcome to the real world',
+        expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
+      },
+      'should work with dirty HTML': {
+        text: 'Hello and wel<>come <!-- -->to the real world, Neo',
+        query: 'Neo',
+        expected: 'Hello and wel<>come <!-- -->to the real world, *Neo*',
+      },
+      'should return well-formed HTML': {
+        text: 'Hello and welcome to <strong>the real world, Neo</strong>',
+        query: 'welcome to the real world',
+        expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
+      },
+      'should highlight multiple paragraphs': {
+        text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
+        query: 'Neo Trinity',
+        expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
+      },
+      'should handle block elements': {
+        text: '<p>Hello</p><p>Trinity</p>',
+        query: 'Trinity',
+        expected: '<p>Hello</p><p>*Trinity*</p>',
+      },
+      'should handle block elements with punctuation': {
+        text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
+        query: 'Neo Trinity',
+        expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
+      },
+      'should use secondary highlight': {
+        text: '<strong>Hello and welcome to the real world</strong> Neo.',
+        query: 'world Neo',
+        options: {
+          before: '<span>',
+          beforeSecond: '<span class=secondary>',
+          after: '</span>',
         },
-        'should skip embedded empty HTML': {
-          text: 'Hello and wel<span class="a_0__0"></span>come to the real world, Neo',
-          query: 'welcome to the real world',
-          expected: 'Hello and *wel<span class="a_0__0"></span>come to the real world*, Neo',
+        expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
+      },
+      'should use before second and after second highlight': {
+        text: '<i>Hello and welcome to the real world</i> Neo.',
+        query: 'world Neo',
+        expected: '<i>Hello and welcome to the real <strong>world</strong></i><span class=secondary> Neo</span>.',
+        options: {
+          before: '<strong>',
+          after: '</strong>',
+          beforeSecond: '<span class=secondary>',
+          afterSecond: '</span>',
+        }
+      },
+      'should skip markup with non-textual content': {
+        text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
+        query: 'font',
+        expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
+      },
+      'should not allow block markup to get caught in the middle of a match': {
+        text: 'Hello and welcome to the real world <div>Neo</div>and Trinity.',
+        query: 'world Neo Trinity',
+        expected: 'Hello and welcome to the real *world *<div>*Neo*</div>*and Trinity*.',
+      },
+      'should allow for self closing noClosing elements': {
+        text: '<html><head title="foo" /><body>Hello and welcome to the real world Neo and Trinity.</body></html>',
+        query: 'Neo Trinity',
+        expected: '<html><head title="foo" /><body>Hello and welcome to the real world *Neo and Trinity*.</body></html>',
+      },
+      'should allow for empty block elements': {
+        text: 'I just sent you a meeting invitation.<div><br></div><div>Mark</div></div>',
+        query: 'Mark',
+        expected: 'I just sent you a meeting invitation.<div><br></div><div>*Mark*</div></div>',
+      },
+    };
+    generateIts(its, generateHtmlIt);
+
+    it('should fail on invalid markup', function() {
+      try {
+        documentHighlight.html("<hello world", "world");
+      } catch(e) {
+        return;
+      }
+
+      throw new Error("Invalid markup should not be parsed");
+    });
+
+    it('should add a complimentary space character if needed', function() {
+      var html = '<p><span class="greeting">Hello</span> and welcome<br/>to the real world, Neo</p>';
+      var query = 'welcome to the real world';
+      var expected = 'Hello and *welcome to the real world*, Neo';
+      var ret = documentHighlight.html(html, query, {
+        before: '*',
+        after: '*'
+      });
+      ret.text.should.eql(expected);
+    });
+
+    describe('in edge cases with existing markup', function() {
+      // [---] is the highlight query,
+      // (---) the existing markup
+      var its = {
+        '---(--[--------]--)----': {
+          text: '<strong>Eat drink and be merry</strong> for tomorrow we die',
+          query: 'drink',
+          expected: '<strong>Eat *drink* and be merry</strong> for tomorrow we die',
         },
-        'should work with dirty HTML': {
-          text: 'Hello and wel<>come <!-- -->to the real world, Neo',
-          query: 'Neo',
-          expected: 'Hello and wel<>come <!-- -->to the real world, *Neo*',
+        '------[-(----)-]-------': {
+          text: 'Eat <strong>drink</strong> and be merry for tomorrow we die',
+          query: 'Eat drink and be merry',
+          expected: '*Eat <strong>drink</strong> and be merry* for tomorrow we die',
         },
-        'should return well-formed HTML': {
-          text: 'Hello and welcome to <strong>the real world, Neo</strong>',
-          query: 'welcome to the real world',
-          expected: 'Hello and *welcome to *<strong>*the real world*, Neo</strong>',
+        '------[(------)]-------': {
+          text: 'Eat <strong>drink</strong> and be merry for tomorrow we die',
+          query: 'drink',
+          expected: 'Eat *<strong>drink</strong>* and be merry for tomorrow we die',
         },
-        'should highlight multiple paragraphs': {
-          text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
-          query: 'Neo Trinity',
-          expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
+        '--(---[---)----]-------': {
+          text: '<strong>Eat drink and be merry</strong> for tomorrow we die',
+          query: 'merry for tomorrow',
+          expected: '<strong>Eat drink and be *merry*</strong>* for tomorrow* we die',
         },
-        'should handle block elements': {
-          text: '<p>Hello</p><p>Trinity</p>',
-          query: 'Trinity',
-          expected: '<p>Hello</p><p>*Trinity*</p>',
+        '------[----(---]---)---': {
+          text: 'Eat <strong>drink and be merry</strong> for tomorrow we die',
+          query: 'Eat drink',
+          expected: '*Eat *<strong>*drink* and be merry</strong> for tomorrow we die',
         },
-        'should handle block elements with punctuation': {
-          text: '<p>Hello and welcome to the real world, Neo.</p><p>Trinity will be there soon.</p>',
-          query: 'Neo Trinity',
-          expected: '<p>Hello and welcome to the real world, *Neo.*</p><p>*Trinity* will be there soon.</p>',
+        '------[(---)---]-------': {
+          text: '<strong>Eat drink</strong> and be merry for tomorrow we die',
+          query: 'Eat drink and be merry',
+          expected: '*<strong>Eat drink</strong> and be merry* for tomorrow we die',
         },
-        'should use secondary highlight': {
-          text: '<strong>Hello and welcome to the real world</strong> Neo.',
-          query: 'world Neo',
-          options: {
-            before: '<span>',
-            beforeSecond: '<span class=secondary>',
-            after: '</span>',
-          },
-          expected: '<strong>Hello and welcome to the real <span>world</span></strong><span class=secondary> Neo</span>.',
+        '------[---(---)]-------': {
+          text: 'Eat drink <strong>and be merry</strong> for tomorrow we die',
+          query: 'Eat drink and be merry',
+          expected: '*Eat drink <strong>and be merry</strong>* for tomorrow we die',
         },
-        'should use before second and after second highlight': {
-          text: '<i>Hello and welcome to the real world</i> Neo.',
-          query: 'world Neo',
-          expected: '<i>Hello and welcome to the real <strong>world</strong></i><span class=secondary> Neo</span>.',
-          options: {
-            before: '<strong>',
-            after: '</strong>',
-            beforeSecond: '<span class=secondary>',
-            afterSecond: '</span>',
-          }
+        '--(--)[--------]-------': {
+          text: '<strong>Eat</strong> drink and be merry for tomorrow we die',
+          query: 'drink and be merry',
+          expected: '<strong>Eat</strong> *drink and be merry* for tomorrow we die',
         },
-        'should skip markup with non-textual content': {
-          text: '<style>abbr { font-size:2em; }</style> <p>This font</p>',
-          query: 'font',
-          expected: '<style>abbr { font-size:2em; }</style> <p>This *font*</p>',
-        },
-        'should not allow block markup to get caught in the middle of a match': {
-          text: 'Hello and welcome to the real world <div>Neo</div>and Trinity.',
-          query: 'world Neo Trinity',
-          expected: 'Hello and welcome to the real *world *<div>*Neo*</div>*and Trinity*.',
-        },
-        'should allow for self closing noClosing elements': {
-          text: '<html><head title="foo" /><body>Hello and welcome to the real world Neo and Trinity.</body></html>',
-          query: 'Neo Trinity',
-          expected: '<html><head title="foo" /><body>Hello and welcome to the real world *Neo and Trinity*.</body></html>',
-        },
-        'should allow for empty block elements': {
-          text: 'I just sent you a meeting invitation.<div><br></div><div>Mark</div></div>',
-          query: 'Mark',
-          expected: 'I just sent you a meeting invitation.<div><br></div><div>*Mark*</div></div>',
+        '------[--------](-----)': {
+          text: 'Eat drink <strong>and be merry</strong> for tomorrow we die',
+          query: 'for tomorrow we die',
+          expected: 'Eat drink <strong>and be merry</strong> *for tomorrow we die*',
         },
       };
       generateIts(its, generateHtmlIt);
-
-      it('should fail on invalid markup', function() {
-        try {
-          documentHighlight.html("<hello world", "world");
-        } catch(e) {
-          return;
-        }
-
-        throw new Error("Invalid markup should not be parsed");
-      });
-
-      it('should add a complimentary space character if needed', function() {
-        var html = '<p><span class="greeting">Hello</span> and welcome<br/>to the real world, Neo</p>';
-        var query = 'welcome to the real world';
-        var expected = 'Hello and *welcome to the real world*, Neo';
-        var ret = documentHighlight.html(html, query, {
-          before: '*',
-          after: '*'
-        });
-        ret.text.should.eql(expected);
-      });
-
-      describe('in edge cases with existing markup', function() {
-        // [---] is the highlight query,
-        // (---) the existing markup
-        var its = {
-          '---(--[--------]--)----': {
-            text: '<strong>Eat drink and be merry</strong> for tomorrow we die',
-            query: 'drink',
-            expected: '<strong>Eat *drink* and be merry</strong> for tomorrow we die',
-          },
-          '------[-(----)-]-------': {
-            text: 'Eat <strong>drink</strong> and be merry for tomorrow we die',
-            query: 'Eat drink and be merry',
-            expected: '*Eat <strong>drink</strong> and be merry* for tomorrow we die',
-          },
-          '------[(------)]-------': {
-            text: 'Eat <strong>drink</strong> and be merry for tomorrow we die',
-            query: 'drink',
-            expected: 'Eat *<strong>drink</strong>* and be merry for tomorrow we die',
-          },
-          '--(---[---)----]-------': {
-            text: '<strong>Eat drink and be merry</strong> for tomorrow we die',
-            query: 'merry for tomorrow',
-            expected: '<strong>Eat drink and be *merry*</strong>* for tomorrow* we die',
-          },
-          '------[----(---]---)---': {
-            text: 'Eat <strong>drink and be merry</strong> for tomorrow we die',
-            query: 'Eat drink',
-            expected: '*Eat *<strong>*drink* and be merry</strong> for tomorrow we die',
-          },
-          '------[(---)---]-------': {
-            text: '<strong>Eat drink</strong> and be merry for tomorrow we die',
-            query: 'Eat drink and be merry',
-            expected: '*<strong>Eat drink</strong> and be merry* for tomorrow we die',
-          },
-          '------[---(---)]-------': {
-            text: 'Eat drink <strong>and be merry</strong> for tomorrow we die',
-            query: 'Eat drink and be merry',
-            expected: '*Eat drink <strong>and be merry</strong>* for tomorrow we die',
-          },
-          '--(--)[--------]-------': {
-            text: '<strong>Eat</strong> drink and be merry for tomorrow we die',
-            query: 'drink and be merry',
-            expected: '<strong>Eat</strong> *drink and be merry* for tomorrow we die',
-          },
-          '------[--------](-----)': {
-            text: 'Eat drink <strong>and be merry</strong> for tomorrow we die',
-            query: 'for tomorrow we die',
-            expected: 'Eat drink <strong>and be merry</strong> *for tomorrow we die*',
-          },
-        };
-        generateIts(its, generateHtmlIt);
-      });
+    });
   });
 });
