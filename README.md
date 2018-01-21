@@ -1,5 +1,7 @@
 Content aware document Highlighter
 =======================
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Neamar/document-highlighter.svg)](https://greenkeeper.io/)
 ![Build Status](https://travis-ci.org/Neamar/document-highlighter.png)
 ![Coverage Status](https://coveralls.io/repos/Neamar/document-highlighter/badge.png?branch=master)
 
