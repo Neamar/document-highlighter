@@ -1,46 +1,106 @@
-Content aware document Highlighter
-=======================
-![Build Status](https://travis-ci.org/Neamar/document-highlighter.png)
-![Coverage Status](https://coveralls.io/repos/Neamar/document-highlighter/badge.png?branch=master)
+# Hylite
 
-## What is `document highlighter`?
-Add highlight to a raw / HTML document for the specified query. Handle unicode, stop-words and punctuation.
-Generate HTML-compliant highlights, even for complex markup.
+*Hylite*, a.k.a. `document highlighter`, is a JavaScript library to add highlight to a *raw / HTML document* for the specified query. It handles unicode, stop-words and punctuation, and generates HTML-compliant highlights, even for complex markup.
+
+> The name is a combination of "highlight" and "lite", as in "lightweight". It also sounds like "high light", which is what the library does: it highlights text in a document.
+
+## Table of Contents
+
+- [Hylite](#hylite)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Samples](#samples)
+    - [Plain Text](#plain-text)
+    - [Stopwords](#stopwords)
+    - [HTML](#html)
+  - [Usage](#usage)
+    - [Highlight plain text documents](#highlight-plain-text-documents)
+    - [Highlight HTML documents](#highlight-html-documents)
+    - [Customize highlight markup](#customize-highlight-markup)
+  - [Status](#status)
+  - [Supported languages](#supported-languages)
+  - [Contributing](#contributing)
+
+## Installation
+
+```bash
+# Move to your workspace
+cd <your-workspace>
+
+# Clone this project into your workspace
+git clone <repository-url>
+
+# Move to the project root directory
+cd hylite
+
+# Open the project in your favorite IDE
+code . # For Visual Studio Code
+
+# Install dependencies and run tests
+npm install
+
+# Run tests
+npx mocha test/index.js test/highlight.js test/real.js test/turkish.js
+```
 
 ## Samples
-### Plain text
-#### Simple case
-The following text :
 
-> The index analysis module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query strings. It maps to the Lucene Analyzer.
+### Plain Text
+
+```plain
+The index analysis module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query strings. It maps to the Lucene Analyzer.
+```
 
 When highlighted for the query `The index analysis string` will become:
 
-> **The index analysis** module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query **strings**. It maps to the Lucene Analyzer.
+```plain
+**The index analysis** module acts as a configurable registry of Analyzers that can be used in order to both break indexed (analyzed) fields when a document is indexed and process query **strings**. It maps to the Lucene Analyzer.
+```
 
-Note generated markup is minimal (one item per match, and not one item per word).
+> Note generated markup is minimal (one item per match, and not one item per word).
 
-#### Stopwords
-Document highlighter handles stopwords and punctuation according to the language specified. For instance, the following text:
+### Stopwords
 
-> Install this library, and start using it.
+Document highlighter handles *stopwords* and *punctuation* according to the language specified. For instance, the following text:
+
+```plain
+Install this library, and start using it.
+```
 
 When highlighted for the query `install library` will become:
 
-> **Install this library**, and start using it.
+```plain
+**Install this library**, and start using it.
+```
 
 ### HTML
-This also works for HTML documents, e.g. :
 
-> This document contains _italics_ and stuff.
+This also works for *HTML* documents, e.g. :
+
+```html
+This document contains _italics_ and stuff.
+```
 
 When highlighted for the query `it contains some italic empty` will become:
-> This document **contains _italics_** and stuff.
 
-Document highlighter maintains original markup and add wrapping tags as needed.
+```html
+This document **contains _italics_** and stuff.
+```
+
+> Document highlighter maintains original markup and add wrapping tags as needed.
 
 ## Usage
+
+> First, require the library:
+
+```bash
+npm install document-highlighter
+```
+
+Then, you can use it as follows:
+
 ### Highlight plain text documents
+
 ```javascript
 var highlighter = require('document-highlighter');
 
@@ -60,6 +120,7 @@ console.log(hl.indices);
 ```
 
 ### Highlight HTML documents
+
 ```javascript
 var highlighter = require('document-highlighter');
 
@@ -76,6 +137,7 @@ console.log(hl.text);
 ```
 
 ### Customize highlight markup
+
 ```javascript
 var highlighter = require('document-highlighter');
 
@@ -109,3 +171,20 @@ var hl = highlighter.text(
 console.log(hl.text);
 // "In JavaScript, you can define a <span class="hlt">callback handler in</span> regex string replace <span class="hlt">operations</span>"
 ```
+
+## Status
+
+![Build Status](https://travis-ci.org/Neamar/document-highlighter.png)
+![Coverage Status](https://coveralls.io/repos/Neamar/document-highlighter/badge.png?branch=master)
+
+## Supported languages
+
+Document highlighter supports the following languages:
+
+- English
+- French
+- Turkish
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.

@@ -21,9 +21,8 @@
     "queries",
     "search"
   ],
-  "dependencies": {},
   "devDependencies": {
-    "mocha": "1.18.x",
+    "mocha": "^10.8.2",
     "should": "3.3.x"
   },
   "licence": "WTFPL",
